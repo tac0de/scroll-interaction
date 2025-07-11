@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, address=no, email=no" />
+    <title>당신의 세상이 깊어지는 중, 더중앙플러스 | 중앙일보</title>
+    <meta name="title" content="당신의 세상이 깊어지는 중, 더중앙플러스 | 중앙일보" />
+    <meta name="description" content="지금 더중플에서 만나는 지식으로, 더 깊은 세상으로. 당신의 세상이 깊어지는 중" />
+    <meta name="news_keywords"
+        content="중앙일보, 더중앙플러스, 더중플, 더중앙플러스 구독, 브랜드 캠페인, 당신의 세상이 깊어지는 중, 슬로건, 브랜드 영상, 브랜드 필름, 이벤트, 즉석당첨 이벤트">
+    <meta property="og:url"
+        content="https://www.joongang.co.kr/2025brand-campaign_plus-story?thejoongang_open_browser=y" />
+    <meta property="og:title" content="당신의 세상이 깊어지는 중, 더중앙플러스 | 중앙일보" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="지금 더중플에서 만나는 지식으로, 더 깊은 세상으로. 당신의 세상이 깊어지는 중" />
+    <meta property="og:image"
+        content="https://img.joongang.co.kr/pubimg/event/2025/brand/intro/og/img_SNS_facebook.jpg" />
+    <meta property="og:image:kakao"
+        content="https://img.joongang.co.kr/pubimg/event/2025/brand/intro/og/img_SNS_kakaotalk.jpg">
+    <meta property="og:site_name" content="중앙일보" />
+    <meta property="og:locale" content="ko_KR" />
+    <meta property="article:author" content="https://www.joongang.co.kr" />
+    <meta property="article:publisher" content="https://www.joongang.co.kr" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="당신의 세상이 깊어지는 중, 더중앙플러스 | 중앙일보" />
+    <meta name="twitter:description" content="지금 더중플에서 만나는 지식으로, 더 깊은 세상으로. 당신의 세상이 깊어지는 중" />
+    <meta name="twitter:image"
+        content="https://img.joongang.co.kr/pubimg/event/2025/brand/intro/og/img_SNS_facebook.jpg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://img.joongang.co.kr/pubimg/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://img.joongang.co.kr/pubimg/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://img.joongang.co.kr/pubimg/favicon/favicon-16x16.png">
+    <link rel="manifest" href="https://img.joongang.co.kr/pubimg/favicon/site.webmanifest">
+    <link href="https://img.joongang.co.kr/pubimg/favicon/favicon.ico" rel="shortcut icon">
+    <link rel="stylesheet" href="https://static.joongang.co.kr/css/font.css">
+    <link rel="stylesheet" href="https://static.joongang.co.kr/css/plugin/jswiper.min.css">
+    <link rel="stylesheet" href="https://static.joongang.co.kr/css/layout.min.css?20250526070140">
+    <script src="https://static.joongang.co.kr/js/lib/jquery-3.3.1.min.js?20250526070140"></script>
+    <script src="https://static.joongang.co.kr/js/plugin/jquery.tmpl.min.js?20250526070140"></script>
+    <script src="https://static.joongang.co.kr/js/resource.js?20250526070140"></script>
+    <script src="https://static.joongang.co.kr/js/utils/include.js?20250526070140"></script>
+    <script src="https://static.joongang.co.kr/js/utils/utils.js?20250526070140"></script>
+    <script src="https://static.joongang.co.kr/js/utils/messageUtil.js?20250526070140"></script>
+    <script src="https://static.joongang.co.kr/js/common.js?20250526070140"></script>
+    <script src="https://static.joongang.co.kr/js/search.js?20250526070140"></script>
+    <script src="https://static.joongang.co.kr/jsn/jaSwiperAutoload.js?20250526070140" defer></script>
+    <link rel="stylesheet" href="https://static.joongang.co.kr/css/event/brand_2025_new_slogan.min.css?202506171444">
+    <script defer src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- 로딩 스피너 스타일 -->
+    <style>
+        .loading-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+        
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        /* 컴포넌트 컨테이너 스타일 */
+        .component-container {
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        
+        .component-container.loaded {
+            opacity: 1;
+        }
+        
+        /* 오류 메시지 스타일 */
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 4px;
+            border-left: 4px solid #c62828;
+        }
+    </style>
+ </head>
+<body>
+    <div id="skip_nav">
+        <a href="#container">본문 바로가기</a>
+    </div>
+    
+    <!-- 로딩 스피너 -->
+    <div id="loading-container" class="loading-container">
+        <div>
+            <div class="loading-spinner"></div>
+            <div class="loading-text">컴포넌트를 로드하는 중...</div>
+        </div>
+    </div>
+    
+    <!-- 컴포넌트 컨테이너들 -->
+    <div id="wrapper">
+        <div id="app-container" class="component-container">
+        <!-- 헤더 컴포넌트 -->
+        <div id="header-container" class="component-wrapper" data-component="header"></div>
+        
+        <!-- 메가메뉴 팝업 (원본 HTML에서 복사) -->
+        <div id="menu_popup" class="full_popup menu_popup">
+            <div class="layer_popup side_nav">
+                <div class="layer_header lg_hidden">
+                    <strong class="logo"><a href="https://www.joongang.co.kr"><span class="visually_hidden">The JoongAng</span></a></strong>
+                </div>
+                <div class="scroll">
+                    <div class="my_wrap noline">
+                        <div class="logout lg_hidden">
+                            <p class="logout_title">간편 로그인하고 한결 더 편리해진 <br />나만의 중앙일보를 경험해보세요.</p>
+                            <button type="button" class="btn_user" onclick="jaLogin();" data-evnt-ctg="account"
+                                data-evnt-act="click: login" data-evnt-lbl="layer popup : 모바일-메가메뉴">로그인<i
+                                    class="ico_arrow_right"><span class="visually_hidden">로그인</span></i></button>
+                        </div>
+                        <ul class="mypage_wrap d_mypage_megamenu">
+                            <li><a href="https://www.joongang.co.kr/mynews" class="user_wrap"
+                                    data-evnt-ctg="area:중앙|더중플 브랜드 캠페인 더중플 스토리" data-evnt-act="move:A30 메가메뉴"
+                                    data-evnt-lbl="마이페이지"><strong><span class="user"></span>님</strong>의 마이페이지<i
+                                        class="ico_arrow_right"></i></a></li>
+                            <li class="sm_hidden md_hidden"><a href="https://www.joongang.co.kr/customercenter">고객센터</a></li>
+                            <li class="sm_hidden md_hidden"><a href="https://www.joongang.co.kr/guides">더중앙 이용안내</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 메인 콘텐츠 -->
+        <div id="container">
+            <main id="main-content">
+                <!-- 엔트리 섹션 -->
+                <div id="entry-container" class="component-wrapper" data-component="entry"></div>
+                
+                <!-- 인트로 섹션 -->
+                <div id="intro-container" class="component-wrapper" data-component="intro"></div>
+                
+                <!-- 큐레이션 섹션 -->
+                <div id="curation-container" class="component-wrapper" data-component="curation"></div>
+                
+                <!-- 슬로건 섹션 -->
+                <div id="slogan-container" class="component-wrapper" data-component="slogan"></div>
+                
+                <!-- 프로미스 섹션 -->
+                <div id="promise-container" class="component-wrapper" data-component="promise"></div>
+                
+                <!-- 미션 섹션 -->
+                <div id="mission-container" class="component-wrapper" data-component="mission"></div>
+                
+                <!-- 비디오 섹션 -->
+                <div id="video-container" class="component-wrapper" data-component="video"></div>
+                
+                <!-- 공유 섹션 -->
+                <div id="share-container" class="component-wrapper" data-component="share"></div>
+            </main>
+        </div>
+    </div>
+    </div>
+    
+    <!-- 오류 메시지 컨테이너 -->
+    <div id="error-container" class="hidden"></div>
+    
+    <!-- 애플리케이션 초기화 스크립트 -->
+    <script type="module">
+        import { loadAllComponents, getComponentsStatus } from './js/componentLoader.js';
+        import { 
+            initEntryAnimation,
+            initIntroAnimation,
+            initCurationAnimation,
+            initSloganAnimation,
+            initPromiseAnimation,
+            initMissionAnimation
+        } from './js/main.js';
+        
+        // 로딩 상태 관리
+        const loadingContainer = document.getElementById('loading-container');
+        const appContainer = document.getElementById('app-container');
+        const errorContainer = document.getElementById('error-container');
+        
+        // 오류 메시지 표시 함수
+        function showError(message) {
+            errorContainer.innerHTML = `
+                <div class="error-message">
+                    <strong>오류:</strong> ${message}
+                    <br>
+                    <button onclick="location.reload()">페이지 새로고침</button>
+                </div>
+            `;
+            errorContainer.classList.remove('hidden');
+        }
+        
+        // 로딩 완료 처리 함수
+        function hideLoading() {
+            loadingContainer.classList.add('hidden');
+            appContainer.classList.add('loaded');
+        }
+        
+        // 애플리케이션 초기화 함수
+        async function initializeApp() {
+            try {
+                console.log('컴포넌트 로드 시작...');
+                
+                // 모든 컴포넌트 로드
+                await loadAllComponents();
+                
+                // 로딩 상태 확인
+                const status = getComponentsStatus();
+                console.log('컴포넌트 로딩 상태:', status);
+                
+                // 모든 컴포넌트가 로드되었는지 확인
+                const allLoaded = Object.values(status).every(loaded => loaded);
+                
+                if (!allLoaded) {
+                    const failedComponents = Object.keys(status).filter(name => !status[name]);
+                    throw new Error(`다음 컴포넌트를 로드할 수 없습니다: ${failedComponents.join(', ')}`);
+                }
+                
+                // 애니메이션 초기화 (컴포넌트 로드 후)
+                setTimeout(() => {
+                    initEntryAnimation();
+                    initIntroAnimation();
+                    initCurationAnimation();
+                    initSloganAnimation();
+                    initPromiseAnimation();
+                    initMissionAnimation();
+                    
+                    // GSAP 및 ScrollTrigger 초기화
+                    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                        gsap.registerPlugin(ScrollTrigger);
+                    }
+                    
+                    console.log('애플리케이션 초기화 완료');
+                }, 100);
+                
+                // 로딩 화면 숨기기
+                hideLoading();
+                
+            } catch (error) {
+                console.error('애플리케이션 초기화 실패:', error);
+                showError(error.message || '애플리케이션을 초기화할 수 없습니다.');
+                hideLoading();
+            }
+        }
+        
+        // 컴포넌트 로드 이벤트 리스너
+        document.addEventListener('componentLoaded', (event) => {
+            const { componentName } = event.detail;
+            console.log(`컴포넌트 "${componentName}" 로드됨`);
+        });
+        
+        // 모든 컴포넌트 로드 완료 이벤트 리스너
+        document.addEventListener('allComponentsLoaded', () => {
+            console.log('모든 컴포넌트 로드 완료');
+        });
+        
+        // DOM이 준비되면 초기화 시작
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeApp);
+        } else {
+            initializeApp();
+        }
+        
+        // 전역 오류 핸들러
+        window.addEventListener('error', (event) => {
+            console.error('전역 오류:', event.error);
+            showError('애플리케이션에서 오류가 발생했습니다.');
+        });
+        
+        // 약속 거부 핸들러
+        window.addEventListener('unhandledrejection', (event) => {
+            console.error('처리되지 않은 Promise 거부:', event.reason);
+            showError('비동기 작업에서 오류가 발생했습니다.');
+        });
+        
+        // 중앙일보 기존 함수들과 호환성을 위한 전역 함수 정의
+        window.onClickSearchButton = function() {
+            // 검색 기능은 기존 중앙일보 시스템을 사용
+            console.log('검색 버튼 클릭');
+            // 실제 검색 페이지로 이동하거나 검색 UI를 띄우는 코드
+            // 이 부분은 기존 중앙일보 시스템의 search.js에서 처리됨
+        };
+        
+        window.openLayer = function(button, popup) {
+            // 기존 중앙일보 레이어 팝업 시스템 사용
+            if (popup && popup.classList) {
+                popup.classList.add('show');
+                popup.style.display = 'block';
+            }
+        };
+        
+        // 메가메뉴 팝업 전역 변수 정의
+        window.menu_popup = document.getElementById('menu_popup');
+        
+        window.jaLogin = function() {
+            console.log('로그인 함수 호출');
+            // 기존 중앙일보 로그인 시스템 사용
+        };
+        
+        window.jaJoin = function() {
+            console.log('회원가입 함수 호출');
+            // 기존 중앙일보 회원가입 시스템 사용
+        };
+        
+        window.jaLogout = function() {
+            console.log('로그아웃 함수 호출');
+            // 기존 중앙일보 로그아웃 시스템 사용
+        };
+    </script>
+</body>
+</html> 

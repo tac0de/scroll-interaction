@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴포넌트 로더 데모</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .demo-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .demo-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .demo-button:hover {
+            opacity: 0.8;
+        }
+        
+        .load-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        .unload-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        
+        .status-btn {
+            background-color: #2196F3;
+            color: white;
+        }
+        
+        .demo-content {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 400px;
+            padding: 20px;
+            background-color: #fafafa;
+        }
+        
+        .component-container {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 2px dashed #ccc;
+            border-radius: 4px;
+            min-height: 50px;
+        }
+        
+        .component-container.loaded {
+            border-color: #4CAF50;
+            background-color: #f8fff8;
+        }
+        
+        .component-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .status-display {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e8f5e8;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .error-message {
+            color: #f44336;
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <div class="demo-header">
+            <h1>컴포넌트 로더 데모</h1>
+            <p>동적 컴포넌트 로딩 시스템을 체험해보세요</p>
+        </div>
+        
+        <div class="demo-controls">
+            <button class="demo-button load-btn" onclick="loadSingleComponent()">
+                헤더 로드
+            </button>
+            <button class="demo-button load-btn" onclick="loadMultipleComponents()">
+                여러 컴포넌트 로드
+            </button>
+            <button class="demo-button load-btn" onclick="loadAllComponents()">
+                모든 컴포넌트 로드
+            </button>
+            <button class="demo-button unload-btn" onclick="unloadComponent()">
+                헤더 언로드
+            </button>
+            <button class="demo-button status-btn" onclick="checkStatus()">
+                상태 확인
+            </button>
+        </div>
+        
+        <div class="demo-content">
+            <div class="component-container" id="header-container">
+                <div class="component-label">헤더 컴포넌트</div>
+                <div id="header-content">컴포넌트가 로드되지 않았습니다.</div>
+            </div>
+            
+            <div class="component-container" id="entry-container">
+                <div class="component-label">엔트리 컴포넌트</div>
+                <div id="entry-content">컴포넌트가 로드되지 않았습니다.</div>
+            </div>
+            
+            <div class="component-container" id="intro-container">
+                <div class="component-label">인트로 컴포넌트</div>
+                <div id="intro-content">컴포넌트가 로드되지 않았습니다.</div>
+            </div>
+            
+            <div class="status-display" id="status-display">
+                상태: 대기 중...
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { 
+            loadComponent, 
+            loadComponents, 
+            loadAllComponents as loadAll,
+            unloadComponent, 
+            isComponentLoaded,
+            getComponentsStatus 
+        } from './js/componentLoader.js';
+
+        // 전역 함수들
+        window.loadSingleComponent = async function() {
+            try {
+                updateStatus('헤더 컴포넌트 로딩 중...');
+                await loadComponent('header');
+                updateComponentStatus('header', true);
+                updateStatus('헤더 컴포넌트 로드 완료');
+            } catch (error) {
+                showError('헤더 컴포넌트 로드 실패: ' + error.message);
+            }
+        };
+
+        window.loadMultipleComponents = async function() {
+            try {
+                updateStatus('여러 컴포넌트 로딩 중...');
+                await loadComponents(['entry', 'intro']);
+                updateComponentStatus('entry', true);
+                updateComponentStatus('intro', true);
+                updateStatus('여러 컴포넌트 로드 완료');
+            } catch (error) {
+                showError('여러 컴포넌트 로드 실패: ' + error.message);
+            }
+        };
+
+        window.loadAllComponents = async function() {
+            try {
+                updateStatus('모든 컴포넌트 로딩 중...');
+                await loadAll();
+                updateComponentStatus('header', true);
+                updateComponentStatus('entry', true);
+                updateComponentStatus('intro', true);
+                updateStatus('모든 컴포넌트 로드 완료');
+            } catch (error) {
+                showError('모든 컴포넌트 로드 실패: ' + error.message);
+            }
+        };
+
+        window.unloadComponent = function() {
+            try {
+                unloadComponent('header');
+                updateComponentStatus('header', false);
+                updateStatus('헤더 컴포넌트 언로드 완료');
+            } catch (error) {
+                showError('헤더 컴포넌트 언로드 실패: ' + error.message);
+            }
+        };
+
+        window.checkStatus = function() {
+            const status = getComponentsStatus();
+            const statusText = Object.entries(status)
+                .map(([name, loaded]) => `${name}: ${loaded ? '로드됨' : '로드안됨'}`)
+                .join('\n');
+            updateStatus('컴포넌트 상태:\n' + statusText);
+        };
+
+        function updateStatus(message) {
+            const statusDisplay = document.getElementById('status-display');
+            statusDisplay.textContent = message;
+        }
+
+        function updateComponentStatus(componentName, loaded) {
+            const container = document.getElementById(`${componentName}-container`);
+            const content = document.getElementById(`${componentName}-content`);
+            
+            if (loaded) {
+                container.classList.add('loaded');
+                content.textContent = `${componentName} 컴포넌트가 로드되었습니다.`;
+            } else {
+                container.classList.remove('loaded');
+                content.textContent = '컴포넌트가 로드되지 않았습니다.';
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            
+            const statusDisplay = document.getElementById('status-display');
+            statusDisplay.appendChild(errorDiv);
+            
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 5000);
+        }
+
+        // 컴포넌트 로드 이벤트 리스너
+        document.addEventListener('componentLoaded', (event) => {
+            const { componentName } = event.detail;
+            updateStatus(`컴포넌트 "${componentName}" 로드 완료`);
+        });
+
+        // 초기 상태 표시
+        updateStatus('컴포넌트 로더 데모 준비 완료');
+    </script>
+</body>
+</html> 
