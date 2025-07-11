@@ -1,13 +1,9 @@
-/**
- * Slogan 섹션 애니메이션 모듈
- */
-
 import { getResponsiveValue, EASING } from '../utils.js';
 
 /**
- * Slogan 섹션 애니메이션을 초기화하는 함수
+ * Slogan 섹션 애니메이션을 초기화하는 함수 (intro_new.js의 sectionSlogan 1:1 이관)
  */
-export const initSloganAnimation = () => {
+export function initSloganAnimation() {
     const $wrapper = document.querySelector('.slogan_wrap');
     if (!$wrapper) return;
 
@@ -26,22 +22,21 @@ export const initSloganAnimation = () => {
 
     const BG_OFFSET_UNIT = getResponsiveValue(100, 65) / (texts.length - 1) * -1;
 
-    timeline
-        .addLabel('init')
+    timeline.addLabel('init')
         .set($wrapper, { backgroundColor: '#000' })
         .set(texts.slice(1), { opacity: 0, y: getResponsiveValue(15, 22), scale: 0.95 })
         .set(bg, { y: '0%', opacity: 1 }, 0)
         .set(texts[0], { opacity: 1, y: 0, scale: 1 }, 0)
         .addLabel('change_first')
         .to(bg, { y: BG_OFFSET_UNIT + '%', ...EASING }, "+=3")
-        .to(texts[0], { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 1, ...EASING }, '-=0.4') //disappear
-        .to(texts[1], { opacity: 1, y: 0, scale: 1, ...EASING }, '>') //appear
+        .to(texts[0], { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 1, ...EASING }, '-=0.4')
+        .to(texts[1], { opacity: 1, y: 0, scale: 1, ...EASING }, '>')
         .addLabel('change_second')
         .to(bg, { y: BG_OFFSET_UNIT * 2 + '%', ...EASING }, "+=3.5")
-        .to(texts[1], { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 1, ...EASING }, '-=0.4') //disappear
-        .to(texts[2], { opacity: 1, y: 0, scale: 1, ...EASING }, '>') //appear
+        .to(texts[1], { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 1, ...EASING }, '-=0.4')
+        .to(texts[2], { opacity: 1, y: 0, scale: 1, ...EASING }, '>')
         .to({}, { duration: 3 })
         .addLabel('fadeout_slogan')
         .to(texts[2], { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 0.75, ...EASING })
         .to($wrapper, { backgroundColor: '#fff', duration: 0.2, ...EASING }, "+=0.2");
-}; 
+} 

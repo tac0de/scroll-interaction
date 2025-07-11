@@ -1,13 +1,9 @@
-/**
- * Promise 섹션 애니메이션 모듈
- */
-
 import { getResponsiveValue, EASING } from '../utils.js';
 
 /**
- * Promise 섹션 애니메이션을 초기화하는 함수
+ * Promise 섹션 애니메이션을 초기화하는 함수 (intro_new.js의 sectionPromise 1:1 이관)
  */
-export const initPromiseAnimation = () => {
+export function initPromiseAnimation() {
     const $wrapper = document.querySelector('.promise_wrap');
     if (!$wrapper) return;
 
@@ -31,25 +27,24 @@ export const initPromiseAnimation = () => {
         }
     });
 
-    timeline
-        .addLabel('setting')
-        .set(keywords[0], { opacity: 1, display: 'inline-block' })
-        .addLabel('appear')
-        .to(subject, { opacity: 1, scale: 1, y: 1, ...EASING })
-        .to([bg, predicate], { opacity: 1, scale: 1, y: 0, ...EASING }, "+=0.8")
-        .addLabel('text_change')
-        .to({}, { duration: 1 })
-        .to(keywords[0], { opacity: 0, duration: 0.2, ...EASING }) //disappear
-        .set(keywords[0], { display: 'none' })
-        .set(keywords[1], { display: 'inline-block' })
-        .to(keywords[1], { opacity: 1, duration: 1, ...EASING }, '<')
-        .addLabel('text_change2')
-        .to({}, { duration: 1 })
-        .to(keywords[1], { opacity: 0, duration: 0.2, ...EASING }) //disappear
-        .set(keywords[1], { display: 'none' })
-        .set(keywords[2], { display: 'inline-block' })
-        .to(keywords[2], { opacity: 1, duration: 1, ...EASING }, '<')
-        .to({}, { duration: 1 })
-        .addLabel('finish')
-        .to(bg, { opacity: 0, duration: 1, ...EASING });
-}; 
+    timeline.addLabel('setting')
+    .set(keywords[0], {opacity: 1, display: 'inline-block'})
+    .addLabel('appear')
+    .to(subject, { opacity: 1, scale: 1, y: 1, ...EASING})
+    .to([bg, predicate], { opacity: 1, scale: 1, y: 0, ...EASING}, "+=0.8")
+    .addLabel('text_change')
+    .to({}, {duration: 1})
+    .to(keywords[0], {opacity: 0, duration: 0.2, ...EASING}) //disappear
+    .set(keywords[0], {display: 'none'})
+    .set(keywords[1], {display: 'inline-block'})
+    .to(keywords[1], {opacity: 1, duration: 1, ...EASING}, '<')
+    .addLabel('text_change2')
+    .to({}, {duration: 1})
+    .to(keywords[1], {opacity: 0, duration: 0.2, ...EASING}) //disappear
+    .set(keywords[1], {display: 'none'})
+    .set(keywords[2], {display: 'inline-block'})
+    .to(keywords[2], {opacity: 1, duration: 1, ...EASING}, '<')
+    .to({}, {duration: 1})
+    .addLabel('finish')
+    .to(bg, {opacity:0, duration: 1, ...EASING});
+} 

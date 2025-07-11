@@ -1,58 +1,54 @@
-/**
- * 네비게이션 모듈
- */
-
-import { debounce } from './utils.js';
+import { getResponsiveValue } from './utils.js';
 
 /**
- * 네비게이션을 초기화하는 함수
+ * 네비게이션 바의 스크롤/고정/페이드 동작을 담당하는 함수 (intro_new.js의 setNavigation 1:1 이관)
  */
-export const initNavigation = () => {
-    let preWidth = window.innerWidth;
+export function initNavigation() {
+    let lastScrollY = 0;
+    const navigationBar = document.querySelector('.event_nav');
+    if (!navigationBar) return;
 
     const handleScroll = () => {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight;
-        const windowHeight = window.innerHeight;
-        const scrollPercent = (scrollTop / (docHeight - windowHeight)) * 100;
+        const scrollY = window.scrollY;
+        const scrollDiff = scrollY - lastScrollY;
+        const isMobile = getResponsiveValue(true, false);
 
-        // 스크롤 진행률에 따른 네비게이션 업데이트
-        updateNavigationProgress(scrollPercent);
-    };
-
-    const updateNavigationProgress = (progress) => {
-        const navProgress = document.querySelector('.nav-progress');
-        if (navProgress) {
-            navProgress.style.width = `${progress}%`;
+        if (!isMobile) {
+            if (!navigationBar.classList.contains('fixed')) {
+                navigationBar.classList.add('fixed');
+            }
+            navigationBar.classList.remove('fade_out');
+            navigationBar.classList.add('fade_in');
+            navigationBar.style.transform = 'translateY(0)';
+        } else {
+            if (scrollY <= 0) {
+                navigationBar.classList.remove('fade_in', 'fade_out', 'fixed');
+                navigationBar.style.transform = 'translateY(0)';
+            } else {
+                if (!navigationBar.classList.contains('fixed')) {
+                    navigationBar.classList.add('fixed');
+                }
+                if (Math.abs(scrollDiff) > 5) {
+                    if (scrollDiff > 0) {
+                        navigationBar.classList.add('fade_in');
+                        navigationBar.classList.remove('fade_out');
+                        navigationBar.style.transform = 'translateY(0)';
+                    } else {
+                        navigationBar.classList.add('fade_out');
+                        navigationBar.classList.remove('fade_in');
+                        navigationBar.style.transform = 'translateY(-100%)';
+                    }
+                }
+            }
         }
+        lastScrollY = scrollY;
     };
 
-    const handleResize = debounce(() => {
-        const currentWidth = window.innerWidth;
-        if (preWidth !== currentWidth) {
-            preWidth = currentWidth;
-            // 리사이즈 시 필요한 업데이트
-            updateLayout();
-        }
-    }, 250);
-
-    const updateLayout = () => {
-        // 레이아웃 업데이트 로직
-        console.log('Layout updated');
-    };
-
-    // 이벤트 리스너 등록
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
-
-    // 초기 호출
     handleScroll();
-};
 
-/**
- * 네비게이션 정리 함수
- */
-export const cleanupNavigation = () => {
-    window.removeEventListener('scroll', handleScroll);
-    window.removeEventListener('resize', handleResize);
-}; 
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(handleScroll, 50);
+    }, { passive: true });
+} 
