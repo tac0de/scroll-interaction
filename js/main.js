@@ -11,6 +11,15 @@ import { showToast } from './toast.js';
 import { shareToKakao, shareToFacebook, shareToTwitter, copyUrl } from './share.js';
 import { debounce } from './utils.js';
 
+// import { ScrollableCardSection } from './ScrollableCardSection.js';
+
+// // 큐레이션 섹션 초기화
+// const curationAnimation = new ScrollableCardSection({
+//     wrapper: '.curation_wrap',
+//     list: '.card_container',
+//     cards: '.curation_wrap .card',
+// });
+
 let preWidth = window.innerWidth;
 
 function initAnimation() {
