@@ -1,42 +1,48 @@
 import { getResponsiveValue, EASING } from '../utils.js';
+import { SectionAnimationBase, set, to, addLabel } from '../modules/SectionAnimationBase.js';
 
-/**
- * Slogan 섹션 애니메이션을 초기화하는 함수 (intro_new.js의 sectionSlogan 1:1 이관)
- */
+class SloganSection extends SectionAnimationBase {
+  constructor() {
+    super();
+    this.$wrapper = document.querySelector('.slogan_wrap');
+    this.bg = this.$wrapper.querySelector('.slogan_wrap .background');
+    this.texts = Array.from(this.$wrapper.querySelectorAll('.slogan_headline > div'));
+    this.BG_OFFSET_UNIT = getResponsiveValue(100, 65) / (this.texts.length - 1) * -1;
+  }
+  buildScenario() {
+    const { $wrapper, bg, texts, BG_OFFSET_UNIT } = this;
+    return [
+      addLabel('init'),
+      set($wrapper, { backgroundColor: '#000' }),
+      set(texts.slice(1), { opacity: 0, y: getResponsiveValue(15, 22), scale: 0.95 }),
+      set(bg, { y: '0%', opacity: 1 }),
+      set(texts[0], { opacity: 1, y: 0, scale: 1 }),
+      addLabel('change_first'),
+      to(bg, null, '+=3', { y: BG_OFFSET_UNIT + '%', ...EASING }),
+      to(texts[0], null, '-=0.4', { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 1, ...EASING }),
+      to(texts[1], null, '>', { opacity: 1, y: 0, scale: 1, ...EASING }),
+      addLabel('change_second'),
+      to(bg, null, '+=3.5', { y: BG_OFFSET_UNIT * 2 + '%', ...EASING }),
+      to(texts[1], null, '-=0.4', { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 1, ...EASING }),
+      to(texts[2], null, '>', { opacity: 1, y: 0, scale: 1, ...EASING }),
+      to({}, null, undefined, { duration: 3 }),
+      addLabel('fadeout_slogan'),
+      to(texts[2], null, undefined, { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 0.75, ...EASING }),
+      to($wrapper, null, '+=0.2', { backgroundColor: '#fff', duration: 0.2, ...EASING })
+    ];
+  }
+  get scrollTrigger() {
+    return {
+      trigger: '.slogan_wrap',
+      pin: true,
+      start: 'top top',
+      end: '+=' + window.innerHeight * getResponsiveValue(5, 3),
+      scrub: 1,
+    };
+  }
+}
+
 export function initSloganAnimation() {
-    const $wrapper = document.querySelector('.slogan_wrap');
-    if (!$wrapper) return;
-
-    const bg = $wrapper.querySelector('.slogan_wrap .background');
-    const texts = Array.from($wrapper.querySelectorAll('.slogan_headline > div'));
-
-    const timeline = gsap.timeline({
-        scrollTrigger: {
-            trigger: '.slogan_wrap',
-            pin: true,
-            start: 'top top',
-            end: '+=' + window.innerHeight * getResponsiveValue(5, 3),
-            scrub: 1,
-        }
-    });
-
-    const BG_OFFSET_UNIT = getResponsiveValue(100, 65) / (texts.length - 1) * -1;
-
-    timeline.addLabel('init')
-        .set($wrapper, { backgroundColor: '#000' })
-        .set(texts.slice(1), { opacity: 0, y: getResponsiveValue(15, 22), scale: 0.95 })
-        .set(bg, { y: '0%', opacity: 1 }, 0)
-        .set(texts[0], { opacity: 1, y: 0, scale: 1 }, 0)
-        .addLabel('change_first')
-        .to(bg, { y: BG_OFFSET_UNIT + '%', ...EASING }, "+=3")
-        .to(texts[0], { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 1, ...EASING }, '-=0.4')
-        .to(texts[1], { opacity: 1, y: 0, scale: 1, ...EASING }, '>')
-        .addLabel('change_second')
-        .to(bg, { y: BG_OFFSET_UNIT * 2 + '%', ...EASING }, "+=3.5")
-        .to(texts[1], { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 1, ...EASING }, '-=0.4')
-        .to(texts[2], { opacity: 1, y: 0, scale: 1, ...EASING }, '>')
-        .to({}, { duration: 3 })
-        .addLabel('fadeout_slogan')
-        .to(texts[2], { opacity: 0, y: -getResponsiveValue(18, 22), scale: 0.95, duration: 0.75, ...EASING })
-        .to($wrapper, { backgroundColor: '#fff', duration: 0.2, ...EASING }, "+=0.2");
+  const slogan = new SloganSection();
+  if (slogan.$wrapper) slogan.init();
 } 

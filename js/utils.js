@@ -6,6 +6,7 @@ export function getResponsiveValue(mobile, desktop) {
 
 export const EASING = {
     ease: 'power2.out',
+    
 };
 
 export function debounce(func, delay) {
