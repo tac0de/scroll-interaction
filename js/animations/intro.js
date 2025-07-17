@@ -1,5 +1,5 @@
 import { getResponsiveValue, EASING } from '../utils.js';
-import { SectionAnimationBase, set, to, addLabel } from '../modules/SectionAnimationBase.js';
+import { SectionAnimationBase, ScenarioBuilder } from '../modules/SectionAnimationBase.js';
 
 class IntroSection extends SectionAnimationBase {
   constructor() {
@@ -11,19 +11,19 @@ class IntroSection extends SectionAnimationBase {
   }
   buildScenario() {
     const { bg, text, emphasis } = this;
-    return [
-      set(text, { position: 'relative', zIndex: 1 }),
-      set(bg, { zIndex: 0 }),
-      addLabel('init'),
-      set(bg, { opacity: 0, display: 'none' }),
-      set(text, { opacity: 0, y: getResponsiveValue(30, 40), scale: 0.9 }),
-      set(emphasis, { opacity: 0, y: 25, scale: 0, marginLeft: getResponsiveValue(0, '-120px'), marginRight: getResponsiveValue(0, '-120px'), display: 'none' }),
-      addLabel('start'),
-      to(bg, null, 0, { opacity: 1, display: 'inline-block', ...EASING }),
-      to(text, null, 0, { opacity: 1, y: 0, scale: 1, ...EASING }),
-      to(emphasis, null, '+=1', { opacity: 1, y: 0, scale: 1, marginLeft: '0', marginRight: '0', display: 'inline-block', duration: 0.5, ...EASING }),
-      to({}, null, undefined, { duration: 2 })
-    ];
+    return new ScenarioBuilder()
+      .set(text, { position: 'relative', zIndex: 1 })
+      .set(bg, { zIndex: 0 })
+      .addLabel('init')
+      .set(bg, { opacity: 0, display: 'none' })
+      .set(text, { opacity: 0, y: getResponsiveValue(30, 40), scale: 0.9 })
+      .set(emphasis, { opacity: 0, y: 25, scale: 0, marginLeft: getResponsiveValue(0, '-120px'), marginRight: getResponsiveValue(0, '-120px'), display: 'none' })
+      .addLabel('start')
+      .to(bg, null, 0, { opacity: 1, display: 'inline-block', ...EASING })
+      .to(text, null, 0, { opacity: 1, y: 0, scale: 1, ...EASING })
+      .to(emphasis, null, '+=1', { opacity: 1, y: 0, scale: 1, marginLeft: '0', marginRight: '0', display: 'inline-block', duration: 0.5, ...EASING })
+      .to({}, null, undefined, { duration: 2 })
+      .build();
   }
   get timelineOptions() {
     const { $wrapper, bg } = this;

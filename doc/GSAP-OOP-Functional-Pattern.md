@@ -48,6 +48,52 @@ export const EffectPresets = {
 export function buildTimeline(scenario, timeline, effectMap = EffectPresets) { ... }
 ```
 
+## 4-1. 고급 시나리오 헬퍼
+- **each(arr, fn)**: 배열을 순회하며 step을 생성 (map과 동일, 플랫하게 합침)
+- **group(steps, label?)**: 여러 step을 하나의 논리적 블록으로 그룹화 (가독성/구조화용)
+- **ifStep(condition, stepsOrFn)**: 조건부로 step을 포함 (조건이 false면 빈 배열 반환)
+- **fadeInCards(cards, opts?)**: 카드 fade-in 패턴을 위한 헬퍼 (여러 카드에 stagger 적용)
+
+### 예시
+```js
+import { set, to, each, group, ifStep, fadeInCards } from '../modules/SectionAnimationBase.js';
+
+// buildScenario 내부
+return [
+  ...each(cards, (card, i) => [ set(card, {...}), to(card, null, undefined, {...}) ]),
+  ...group([
+    set(a, {...}),
+    to(a, null, undefined, {...})
+  ], 'intro'),
+  ...ifStep(isMobile, [ set(a, {...}) ]),
+  ...fadeInCards(cards, { stagger: 0.1 })
+];
+```
+
+## 4-2. ScenarioBuilder 클래스
+- **ScenarioBuilder**: 체이닝 방식으로 시나리오를 선언할 수 있는 빌더 클래스
+- 기존 배열 기반 시나리오와 100% 호환, 복잡한 시나리오에 유용
+- 주요 메서드: add, set, to, addLabel, containerAnimation, scrollTriggerStep, group, ifStep, fadeInCards, build/toArray
+
+### 예시
+```js
+import { ScenarioBuilder, set, to, fadeInCards } from '../modules/SectionAnimationBase.js';
+
+// buildScenario 내부
+const builder = new ScenarioBuilder();
+builder
+  .set(a, {...})
+  .group([
+    to(a, null, undefined, {...}),
+    to(b, null, undefined, {...})
+  ])
+  .ifStep(isMobile, [ set(a, {...}) ])
+  .fadeInCards(cards, { stagger: 0.1 });
+return builder.build();
+```
+
+- **베스트 프랙티스**: 단순한 시나리오는 배열, 복잡하거나 동적 분기/반복이 많으면 ScenarioBuilder 사용
+
 ## 5. 실전 예시: 커스텀 섹션 클래스 만들기
 ### (js/animations/curation.js)
 ```js

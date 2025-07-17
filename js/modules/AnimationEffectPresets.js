@@ -1,24 +1,80 @@
-// AnimationEffectPresets.js
-// 공통 이펙트 프리셋과 선언적 애니메이션 빌더 함수
-
+/**
+ * GSAP에서 자주 쓰는 효과 프리셋 모음 (함수형)
+ * 각 프리셋은 옵션을 받아 GSAP 애니메이션 파라미터 객체를 반환
+ *
+ * @example
+ *   gsap.to('.el', EffectPresets.fadeIn({ duration: 1 }))
+ */
 export const EffectPresets = {
+  /**
+   * fadeIn: opacity 1, y 0, 기본 1초
+   * @param {object} opts
+   * @returns {object}
+   */
   fadeIn: (opts = {}) => ({ opacity: 1, y: 0, duration: opts.duration || 1, ...opts }),
+  /**
+   * fadeOut: opacity 0, y 0, 기본 1초
+   * @param {object} opts
+   * @returns {object}
+   */
   fadeOut: (opts = {}) => ({ opacity: 0, y: 0, duration: opts.duration || 1, ...opts }),
+  /**
+   * fadeInFrom: from-to 형태로 opacity 0→1
+   * @param {object} opts
+   * @returns {{from: object, to: object}}
+   */
   fadeInFrom: (opts = {}) => ({ from: { opacity: 0, ...opts.from }, to: { opacity: 1, ...opts.to } }),
+  /**
+   * slideInY: y축 슬라이드 인, opacity 1
+   * @param {object} opts
+   * @returns {object}
+   */
   slideInY: (opts = {}) => ({ opacity: 1, y: 0, duration: opts.duration || 1, ...opts }),
+  /**
+   * slideOutY: y축 슬라이드 아웃, opacity 0
+   * @param {object} opts
+   * @returns {object}
+   */
   slideOutY: (opts = {}) => ({ opacity: 0, y: 50, duration: opts.duration || 1, ...opts }),
+  /**
+   * slideInX: x축 슬라이드 인, opacity 1
+   * @param {object} opts
+   * @returns {object}
+   */
   slideInX: (opts = {}) => ({ opacity: 1, x: 0, duration: opts.duration || 1, ...opts }),
+  /**
+   * slideOutX: x축 슬라이드 아웃, opacity 0
+   * @param {object} opts
+   * @returns {object}
+   */
   slideOutX: (opts = {}) => ({ opacity: 0, x: 50, duration: opts.duration || 1, ...opts }),
+  /**
+   * scaleIn: scale 1, opacity 1
+   * @param {object} opts
+   * @returns {object}
+   */
   scaleIn: (opts = {}) => ({ opacity: 1, scale: 1, duration: opts.duration || 1, ...opts }),
+  /**
+   * scaleOut: scale 0.8, opacity 0
+   * @param {object} opts
+   * @returns {object}
+   */
   scaleOut: (opts = {}) => ({ opacity: 0, scale: 0.8, duration: opts.duration || 1, ...opts }),
   // ...필요시 추가
 };
 
 /**
- * 선언적 애니메이션 시나리오를 GSAP timeline에 적용하는 빌더 함수
+ * 선언적 애니메이션 시나리오(step 배열)을 GSAP timeline에 적용하는 빌더 함수
+ *
  * @param {Array} scenario - [{ type, target, effect, at, options, from, to, label, props }]
  * @param {gsap.core.Timeline} timeline - gsap.timeline 인스턴스
- * @param {object} effectMap - (선택) 커스텀 이펙트 맵
+ * @param {object} [effectMap=EffectPresets] - 커스텀 이펙트 맵(선택)
+ * @returns {gsap.core.Timeline}
+ *
+ * @example
+ *   buildTimeline([
+ *     { type: 'to', target: '.el', effect: 'fadeIn', options: { duration: 1 } }
+ *   ], gsap.timeline());
  */
 export function buildTimeline(scenario, timeline, effectMap = EffectPresets) {
   // containerAnimation, scrollTrigger step 지원을 위한 context
